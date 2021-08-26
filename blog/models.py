@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 """
 Post = [title, slug, content, photo, created_at, views, is_published, categories, tags]
@@ -21,6 +22,9 @@ class Post(models.Model):
     is_published = models.BooleanField(default=True)
     categories = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='posts')
     tags = models.ManyToManyField('Tag', verbose_name='posts', blank=True)
+
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.title
