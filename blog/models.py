@@ -20,8 +20,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     views = models.IntegerField(default=0)
     is_published = models.BooleanField(default=True)
-    categories = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='posts')
-    tags = models.ManyToManyField('Tag', verbose_name='posts', blank=True)
+    categories = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='posts')
+    tags = models.ManyToManyField('Tag', related_name='posts', blank=True)
 
     def get_absolute_url(self):
         return reverse('post', kwargs={'slug': self.slug})
@@ -36,6 +36,9 @@ class Post(models.Model):
 class Category(models.Model):
     title = models.CharField(max_length=150)
     slug = models.SlugField(max_length=150, verbose_name='URL', unique=True)
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.title

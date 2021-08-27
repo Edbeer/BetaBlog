@@ -31,3 +31,18 @@ class PostPage(DetailView):
         self.object.save()
         self.object.refresh_from_db()
         return context
+
+
+class PostByCategory(ListView):
+    template_name = 'blog/category.html'
+    context_object_name = 'posts'
+    paginate_by = 6
+    allow_empty = False
+
+    def get_queryset(self):
+        return Post.objects.filter(categories__slug=self.kwargs['slug'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = Category.objects.get(slug=self.kwargs['slug'])
+        return context
