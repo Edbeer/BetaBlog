@@ -36,7 +36,7 @@ class PostPage(DetailView):
 class PostByCategory(ListView):
     template_name = 'blog/category.html'
     context_object_name = 'posts'
-    paginate_by = 6
+    paginate_by = 1
     allow_empty = False
 
     def get_queryset(self):
