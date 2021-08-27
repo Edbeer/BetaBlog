@@ -3,57 +3,57 @@
 
 {% block firstsection %}
 <section class="section first-section">
-  <div class="container-fluid">
-    <div class="masonry-blog clearfix">
-      <div class="first-slot">
-        <div class="masonry-box post-media">
-          <img src="{% static 'upload/tech_01.jpg' %}" alt="" class="img-fluid">
-          <div class="shadoweffect">
-            <div class="shadow-desc">
-              <div class="blog-meta">
-                <span class="bg-orange"><a href="tech-category-01.html" title="">Technology</a></span>
-                <h4><a href="tech-single.html" title="">Say hello to real handmade office furniture! Clean & beautiful design</a></h4>
-                <small><a href="tech-single.html" title="">24 July, 2017</a></small>
-                <small><a href="tech-author.html" title="">by Amanda</a></small>
-              </div><!-- end meta -->
-            </div><!-- end shadow-desc -->
-          </div><!-- end shadow -->
-        </div><!-- end post-media -->
-      </div><!-- end first-side -->
+    <div class="container-fluid">
+        <div class="masonry-blog clearfix">
+            <div class="first-slot">
+                <div class="masonry-box post-media">
+                    <img src="{% static 'upload/tech_01.jpg' %}" alt="" class="img-fluid">
+                    <div class="shadoweffect">
+                        <div class="shadow-desc">
+                            <div class="blog-meta">
+                                <span class="bg-orange"><a href="tech-category-01.html" title="">Technology</a></span>
+                                <h4><a href="tech-single.html" title="">Say hello to real handmade office furniture! Clean & beautiful design</a></h4>
+                                <small><a href="tech-single.html" title="">24 July, 2017</a></small>
+                                <small><a href="tech-author.html" title="">by Amanda</a></small>
+                            </div><!-- end meta -->
+                        </div><!-- end shadow-desc -->
+                    </div><!-- end shadow -->
+                </div><!-- end post-media -->
+            </div><!-- end first-side -->
 
-      <div class="second-slot">
-        <div class="masonry-box post-media">
-          <img src="{% static 'upload/tech_02.jpg' %}" alt="" class="img-fluid">
-          <div class="shadoweffect">
-            <div class="shadow-desc">
-              <div class="blog-meta">
-                <span class="bg-orange"><a href="tech-category-01.html" title="">Gadgets</a></span>
-                <h4><a href="tech-single.html" title="">Do not make mistakes when choosing web hosting</a></h4>
-                <small><a href="tech-single.html" title="">03 July, 2017</a></small>
-                <small><a href="tech-author.html" title="">by Jessica</a></small>
-              </div><!-- end meta -->
-            </div><!-- end shadow-desc -->
-          </div><!-- end shadow -->
-        </div><!-- end post-media -->
-      </div><!-- end second-side -->
+            <div class="second-slot">
+                <div class="masonry-box post-media">
+                    <img src="{% static 'upload/tech_02.jpg' %}" alt="" class="img-fluid">
+                    <div class="shadoweffect">
+                        <div class="shadow-desc">
+                            <div class="blog-meta">
+                                <span class="bg-orange"><a href="tech-category-01.html" title="">Gadgets</a></span>
+                                <h4><a href="tech-single.html" title="">Do not make mistakes when choosing web hosting</a></h4>
+                                <small><a href="tech-single.html" title="">03 July, 2017</a></small>
+                                <small><a href="tech-author.html" title="">by Jessica</a></small>
+                            </div><!-- end meta -->
+                        </div><!-- end shadow-desc -->
+                    </div><!-- end shadow -->
+                </div><!-- end post-media -->
+            </div><!-- end second-side -->
 
-      <div class="last-slot">
-        <div class="masonry-box post-media">
-          <img src="{% static 'upload/tech_03.jpg' %}" alt="" class="img-fluid">
-          <div class="shadoweffect">
-            <div class="shadow-desc">
-              <div class="blog-meta">
-                <span class="bg-orange"><a href="tech-category-01.html" title="">Technology</a></span>
-                <h4><a href="tech-single.html" title="">The most reliable Galaxy Note 8 images leaked</a></h4>
-                <small><a href="tech-single.html" title="">01 July, 2017</a></small>
-                <small><a href="tech-author.html" title="">by Jessica</a></small>
-              </div><!-- end meta -->
-            </div><!-- end shadow-desc -->
-          </div><!-- end shadow -->
-        </div><!-- end post-media -->
-      </div><!-- end second-side -->
-    </div><!-- end masonry -->
-  </div>
+            <div class="last-slot">
+                <div class="masonry-box post-media">
+                    <img src="{% static 'upload/tech_03.jpg' %}" alt="" class="img-fluid">
+                    <div class="shadoweffect">
+                        <div class="shadow-desc">
+                            <div class="blog-meta">
+                                <span class="bg-orange"><a href="tech-category-01.html" title="">Technology</a></span>
+                                <h4><a href="tech-single.html" title="">The most reliable Galaxy Note 8 images leaked</a></h4>
+                                <small><a href="tech-single.html" title="">01 July, 2017</a></small>
+                                <small><a href="tech-author.html" title="">by Jessica</a></small>
+                            </div><!-- end meta -->
+                        </div><!-- end shadow-desc -->
+                    </div><!-- end shadow -->
+                </div><!-- end post-media -->
+            </div><!-- end second-side -->
+        </div><!-- end masonry -->
+    </div>
 </section>
 {% endblock %}
 {% block title %}
@@ -98,20 +98,31 @@
     </div><!-- end page-wrapper -->
 
     <hr class="invis">
+    {% if page_obj.has_other_pages %}
     <div class="row">
         <div class="col-md-12">
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-start">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
                     </li>
+                    {% endif %}
+                    {% for p in page_obj.paginator.page_range %}
+                    {% if p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number}}">Next</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
         </div><!-- end col -->
     </div><!-- end row -->
+    {% endif %}
 </div><!-- end col -->
 
 {% endblock %}
