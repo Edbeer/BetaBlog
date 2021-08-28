@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth import login, logout
 from django.db.models import F
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
@@ -53,7 +54,8 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             return redirect('home')
     else:
         form = UserRegisterForm()
@@ -61,4 +63,17 @@ def register(request):
 
 
 def user_login(request):
-    return render(request, 'blog/login.html')
+    if request.method == 'POST':
+        form = UserCreateForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreateForm()
+    return render(request, 'blog/login.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
