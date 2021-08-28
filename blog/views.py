@@ -1,9 +1,10 @@
-from django.core.paginator import Paginator
+from django.contrib import messages
+from django.contrib.auth import login, logout
 from django.db.models import F
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
-from django.views.generic.list import MultipleObjectMixin
 from .models import *
+from .forms import *
 
 
 class Home(ListView):
@@ -47,3 +48,32 @@ class PostByCategory(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = Category.objects.get(slug=self.kwargs['slug'])
         return context
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'blog/register.html', {'form': form})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = UserCreateForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreateForm()
+    return render(request, 'blog/login.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
