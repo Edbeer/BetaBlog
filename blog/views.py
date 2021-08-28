@@ -1,7 +1,8 @@
+from django.core.paginator import Paginator
 from django.db.models import F
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-
+from django.views.generic.list import MultipleObjectMixin
 from .models import *
 
 
@@ -36,7 +37,7 @@ class PostPage(DetailView):
 class PostByCategory(ListView):
     template_name = 'blog/category.html'
     context_object_name = 'posts'
-    paginate_by = 1
+    paginate_by = 6
     allow_empty = False
 
     def get_queryset(self):
